@@ -1,0 +1,7 @@
+<resources>
+    <string name="sDescription">Sinopsis</string>
+    <string name="sFormatTwoTexts">%s%s</string>
+    <string name="sVotes">Votos\n</string>
+    <string name="sAverageVotes">Puntuación\n</string>
+    <string name="sPopularity">Popularidad\n</string>
+</resources>
