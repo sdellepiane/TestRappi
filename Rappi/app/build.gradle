@@ -17,6 +17,10 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     productFlavors {
         devel {
             applicationId "pe.projects.rappi.testrappi.dev"
@@ -53,5 +57,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation 'org.mockito:mockito-core:2.13.0'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.6'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

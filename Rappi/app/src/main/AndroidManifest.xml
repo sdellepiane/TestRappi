@@ -26,7 +26,8 @@
         <activity
             android:name=".app.ui.activity.MovieListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
         <activity android:name=".app.ui.activity.MovieActivity"

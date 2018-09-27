@@ -3,4 +3,5 @@
     <string name="sTopRatedCategory">Top Rated</string>
     <string name="sUpcomingCategory">Upcoming</string>
     <string name="sActionSearch">Buscar</string>
+    <string name="sNotMovies">No hay películas por mostrar</string>
 </resources>

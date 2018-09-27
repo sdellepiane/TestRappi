@@ -10,5 +10,5 @@ public class Constants {
     public static final int GRID_COLUMNS_MOVIES = 3;
     public static final String MOVIE_SELECTED = "movie_selected";
     public static final String OUTPUT_FORMAT_DATE = "MMMM dd, yyyy";
-    public static final String INPUT_FORMAT_DATE = "yyy-MM-dd";
+    public static final String INPUT_FORMAT_DATE = "yyyy-MM-dd";
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,6 +43,7 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
     @BindView(R.id.vLoading) View vLoading;
     @BindView(R.id.eteSearch) AppCompatEditText eteSearch;
     @BindView(R.id.llaSearch) LinearLayout llaSearch;
+    @BindView(R.id.tviNotMovies) AppCompatTextView tviNotMovies;
 
     private MoviesListListener listener;
     private MoviesListPresenter presenter;
@@ -65,8 +67,9 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
 
     private void init(){
         listener = this;
-        validateSearchBarNetwork();
         ButterKnife.bind(this);
+        movieModelList = new ArrayList<>();
+        validateSearchBarNetwork();
         presenter = new MoviesListPresenter();
         presenter.attachedView(this);
         iniRecyclerView();
@@ -78,9 +81,7 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().length() > 3){
-                    moviesAdapter.getFilter().filter(charSequence.toString());
-                }
+                moviesAdapter.getFilter().filter(charSequence.toString());
             }
 
             @Override
@@ -145,12 +146,18 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
             movieModelList.addAll(listMovieModel.getResults());
             moviesAdapter.notifyDataSetChanged();
         } else {
+            validateDataMovies(listMovieModel.getResults());
             movieModelList = listMovieModel.getResults();
             moviesAdapter = new MoviesAdapter(this, this, movieModelList, rviMovies);
             rviMovies.setAdapter(moviesAdapter);
         }
         presenter.saveMoviesOffline(listMovieModel.getResults(), categorySelected);
         moviesAdapter.setLoaded();
+    }
+
+    private void validateDataMovies(List<MovieModel> movieModelList){
+        rviMovies.setVisibility(movieModelList.isEmpty() ? View.GONE : View.VISIBLE);
+        tviNotMovies.setVisibility(movieModelList.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -176,7 +183,6 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
         page = 1;
         categorySelected = Constants.CATEGORY_TOP_RATED_SELECTED;
         sendViewToChangeBackgroundColorAndTextColor();
-        movieModelList.clear();
         validateChannelToGetMovies();
     }
 
@@ -185,7 +191,6 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
         page = 1;
         categorySelected = Constants.CATEGORY_UPCOMING_SELECTED;
         sendViewToChangeBackgroundColorAndTextColor();
-        movieModelList.clear();
         validateChannelToGetMovies();
     }
 
@@ -221,6 +226,7 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
 
     private void validateChannelToGetMovies(){
         if (NetworkUtils.isOnline(this)) {
+            movieModelList.clear();
             loadListTeams(categorySelected);
         } else {
             loadListItemsOffline();
@@ -228,14 +234,18 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
     }
 
     private void loadListItemsOffline() {
+        vLoadMoreMovies.setVisibility(View.GONE);
         List<MovieModel> movieModelList = presenter.getMovieListOffline(categorySelected);
-        if(moviesAdapter != null){
-            this.movieModelList.clear();
-            this.movieModelList = movieModelList;
-            moviesAdapter.notifyDataSetChanged();
-        } else {
-            moviesAdapter = new MoviesAdapter(this, this, movieModelList, rviMovies);
-            rviMovies.setAdapter(moviesAdapter);
+        validateDataMovies(movieModelList);
+        if(!movieModelList.isEmpty()){
+            if(moviesAdapter != null){
+                this.movieModelList = movieModelList;
+                moviesAdapter.notifyDataSetChanged();
+            } else {
+                moviesAdapter = new MoviesAdapter(this, this, movieModelList, rviMovies);
+                rviMovies.setAdapter(moviesAdapter);
+            }
         }
+
     }
 }

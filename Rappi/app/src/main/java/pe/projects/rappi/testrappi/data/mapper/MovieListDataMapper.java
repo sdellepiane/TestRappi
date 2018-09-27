@@ -28,7 +28,7 @@ public class MovieListDataMapper {
         return listMovieModel;
     }
 
-    private MovieModel transformMovieEntity(MovieEntity movieEntity){
+    public MovieModel transformMovieEntity(MovieEntity movieEntity){
         MovieModel movieModel = null;
         if(movieEntity != null){
             movieModel = new MovieModel();

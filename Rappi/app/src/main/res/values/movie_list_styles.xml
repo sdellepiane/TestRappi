@@ -9,6 +9,7 @@
 
     <style name="MovieListStyle">
         <item name="android:layout_below">@+id/llaSearch</item>
+        <item name="android:layout_above">@+id/vLoadMoreMovies</item>
     </style>
 
 </resources>

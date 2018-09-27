@@ -40,6 +40,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         this.context = context;
         this.listener = listener;
         this.movieModelList = movieModelList;
+        this.movieModelListFiltered = movieModelList;
         final GridLayoutManager gridLayoutManager = (GridLayoutManager) rviMovies.getLayoutManager();
         if(NetworkUtils.isOnline(context)){
             rviMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -67,7 +68,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public void onBindViewHolder(final MoviesViewHolder holder, int position) {
-        final MovieModel movieModel = movieModelList.get(position);
+        final MovieModel movieModel = movieModelListFiltered.get(position);
         if(movieModel != null){
             holder.tviMovieTitle.setText(movieModel.getTitle());
             holder.tviMovieDate.setText(DateUtil.formatDate(movieModel.getReleaseDate(), Constants.INPUT_FORMAT_DATE, Constants.OUTPUT_FORMAT_DATE));
@@ -84,7 +85,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public int getItemCount() {
-        return movieModelList.size();
+            return movieModelListFiltered.size();
     }
 
     public void setLoaded() {
