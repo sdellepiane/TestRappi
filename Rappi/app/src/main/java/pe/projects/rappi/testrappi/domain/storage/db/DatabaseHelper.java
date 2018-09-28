@@ -39,14 +39,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public void clearDatabase(){
-        try {
-            TableUtils.clearTable(this.connectionSource, MovieModel.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void close() {

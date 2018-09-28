@@ -1,7 +1,5 @@
 package pe.projects.rappi.testrappi.data.entity.response;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 import pe.projects.rappi.testrappi.data.entity.MovieEntity;

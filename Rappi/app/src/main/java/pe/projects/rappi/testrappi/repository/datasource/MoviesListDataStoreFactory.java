@@ -4,6 +4,7 @@ import pe.projects.rappi.testrappi.data.rest.ApiClient;
 import pe.projects.rappi.testrappi.domain.storage.db.DaoFactory;
 import pe.projects.rappi.testrappi.repository.datasource.database.DatabaseMovieListDataStore;
 import pe.projects.rappi.testrappi.repository.datasource.database.MovieListDatabaseDataStore;
+import pe.projects.rappi.testrappi.repository.datasource.ws.MoviesListDataStore;
 import pe.projects.rappi.testrappi.repository.datasource.ws.NetworkMoviesListDataStore;
 
 public class MoviesListDataStoreFactory {

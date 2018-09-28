@@ -14,16 +14,16 @@ import retrofit2.http.Query;
 
 public class ApiClient {
 
-    public LaLigaInterface getTMDBInterface() {
+    public RappiInterface getTMDBInterface() {
         Retrofit retrofit= new Retrofit.Builder()
                 .baseUrl(BuildConfig.HOST)
                 .client(getBasicClientInterceptor())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        return retrofit.create(LaLigaInterface.class);
+        return retrofit.create(RappiInterface.class);
     }
 
-    public interface LaLigaInterface {
+    public interface RappiInterface {
 
         @GET("movie/popular")
         Call<MoviesListResponse> getPopularMovies(@Query("api_key") String api_key,

@@ -10,5 +10,6 @@ public interface MoviesListListener {
     void goToMovieDetail(MovieModel movieModel);
     void loadMoreMovies();
     void showMovieList(ListMovieModel listMovieModel);
+    void showMovieListOffline(List<MovieModel> movieModelList);
     void failedLoadData();
 }

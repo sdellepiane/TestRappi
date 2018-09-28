@@ -1,4 +1,4 @@
-package pe.projects.rappi.testrappi.repository.datasource;
+package pe.projects.rappi.testrappi.repository.datasource.ws;
 
 import pe.projects.rappi.testrappi.repository.RepositoryCallback;
 

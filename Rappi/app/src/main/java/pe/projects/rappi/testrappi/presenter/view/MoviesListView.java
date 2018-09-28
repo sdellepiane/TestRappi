@@ -4,5 +4,4 @@ public interface MoviesListView extends BaseView{
 
     void showLoading();
     void hideLoading();
-    void showMessage();
 }

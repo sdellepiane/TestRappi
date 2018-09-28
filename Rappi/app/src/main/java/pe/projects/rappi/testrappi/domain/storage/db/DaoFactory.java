@@ -61,8 +61,4 @@ public class DaoFactory {
         }
         return null;
     }
-
-    public void clearDatabase(){
-        db.clearDatabase();
-    }
 }

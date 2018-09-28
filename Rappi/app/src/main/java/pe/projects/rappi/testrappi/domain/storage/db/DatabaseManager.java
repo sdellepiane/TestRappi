@@ -15,11 +15,4 @@ public class DatabaseManager {
         }
         return databaseHelper;
     }
-
-    public void releaseHelper(DatabaseHelper helper) {
-        if (databaseHelper != null) {
-            OpenHelperManager.releaseHelper();
-            databaseHelper = null;
-        }
-    }
 }

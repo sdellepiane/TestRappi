@@ -5,7 +5,6 @@ import pe.projects.rappi.testrappi.Constants;
 import pe.projects.rappi.testrappi.data.entity.response.MoviesListResponse;
 import pe.projects.rappi.testrappi.data.rest.ApiClient;
 import pe.projects.rappi.testrappi.repository.RepositoryCallback;
-import pe.projects.rappi.testrappi.repository.datasource.MoviesListDataStore;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -6,6 +6,7 @@ import java.util.List;
 
 import pe.projects.rappi.testrappi.domain.model.MovieModel;
 import pe.projects.rappi.testrappi.domain.storage.db.DaoFactory;
+import pe.projects.rappi.testrappi.repository.RepositoryCallback;
 
 public class DatabaseMovieListDataStore implements MovieListDatabaseDataStore{
 
@@ -16,7 +17,7 @@ public class DatabaseMovieListDataStore implements MovieListDatabaseDataStore{
     }
 
     @Override
-    public List<MovieModel> getMoviesByCategory(int category) {
+    public void getMoviesByCategory(int category, RepositoryCallback repositoryCallback) {
         List<MovieModel> movieModelList = new ArrayList<>();
         try {
             daoFactory.getMovieDao();
@@ -25,9 +26,10 @@ public class DatabaseMovieListDataStore implements MovieListDatabaseDataStore{
             e.printStackTrace();
         }
         if(movieModelList == null){
-            return new ArrayList<>();
+            repositoryCallback.onSuccess(new ArrayList<>());
+        } else {
+            repositoryCallback.onSuccess(movieModelList);
         }
-        return movieModelList;
     }
 
     @Override

@@ -32,15 +32,12 @@ public class MoviesListPresenter implements Presenter<MoviesListView>, MoviesLis
     }
 
     public void saveMoviesOffline(List<MovieModel> movieModelList, int category){
-        MovieListDatabaseDataStore movieListDatabaseDataStore = moviesListDataStoreFactory
-                .createMovieDatabase();
-        movieListDatabaseDataStore.saveMovies(movieModelList, category);
+        moviesListInteractor.saveMovies(movieModelList, category);
     }
 
-    public List<MovieModel> getMovieListOffline(int category){
-        MovieListDatabaseDataStore movieListDatabaseDataStore = moviesListDataStoreFactory
-                .createMovieDatabase();
-        return movieListDatabaseDataStore.getMoviesByCategory(category);
+    public void getMovieListOffline(int category, MoviesListListener listener){
+        this.listener = listener;
+        moviesListInteractor.getMoviesListOffline(category, this);
     }
 
     @Override
@@ -51,9 +48,20 @@ public class MoviesListPresenter implements Presenter<MoviesListView>, MoviesLis
     }
 
     @Override
+    public void onGetMovieListOfflineSuccess(Object object) {
+        List<MovieModel> movieModelList = (List<MovieModel>) object;
+        listener.showMovieListOffline(movieModelList);
+    }
+
+    @Override
     public void onGetMovieListFailure(Object object) {
         view.hideLoading();
         listener.failedLoadData();
+    }
+
+    @Override
+    public void onGetMovieListOfflineFailure(Object object) {
+
     }
 
     @Override

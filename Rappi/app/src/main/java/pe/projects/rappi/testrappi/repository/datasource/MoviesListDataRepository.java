@@ -1,12 +1,17 @@
 package pe.projects.rappi.testrappi.repository.datasource;
 
-import pe.projects.rappi.testrappi.app.ui.RappiApplication;
+import java.util.ArrayList;
+import java.util.List;
+
 import pe.projects.rappi.testrappi.data.entity.response.MoviesListResponse;
 import pe.projects.rappi.testrappi.data.mapper.MovieListDataMapper;
 import pe.projects.rappi.testrappi.domain.interactor.MoviesListCallback;
 import pe.projects.rappi.testrappi.domain.model.ListMovieModel;
+import pe.projects.rappi.testrappi.domain.model.MovieModel;
 import pe.projects.rappi.testrappi.domain.repository.MoviesListRepository;
 import pe.projects.rappi.testrappi.repository.RepositoryCallback;
+import pe.projects.rappi.testrappi.repository.datasource.database.MovieListDatabaseDataStore;
+import pe.projects.rappi.testrappi.repository.datasource.ws.MoviesListDataStore;
 
 public class MoviesListDataRepository implements MoviesListRepository{
 
@@ -44,5 +49,41 @@ public class MoviesListDataRepository implements MoviesListRepository{
                 moviesListCallback.onMessageError();
             }
         });
+    }
+
+    @Override
+    public void getMoviesOffline(int categorySelected, final MoviesListCallback moviesListCallback) {
+        MovieListDatabaseDataStore movieListDatabaseDataStore = moviesListDataStoreFactory
+                .createMovieDatabase();
+        movieListDatabaseDataStore.getMoviesByCategory(categorySelected, new RepositoryCallback() {
+            @Override
+            public void onSuccess(Object object) {
+                List<MovieModel> listMovieModel = (ArrayList<MovieModel>) object;
+                moviesListCallback.onGetMovieListOfflineSuccess(listMovieModel);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                moviesListCallback.onMessageError();
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                moviesListCallback.onMessageError();
+            }
+
+            @Override
+            public void onCommonMessageError() {
+                moviesListCallback.onMessageError();
+            }
+        });
+
+    }
+
+    @Override
+    public void saveMovies(List<MovieModel> movieModelList, int categorySelected) {
+        MovieListDatabaseDataStore movieListDatabaseDataStore = moviesListDataStoreFactory
+                .createMovieDatabase();
+        movieListDatabaseDataStore.saveMovies(movieModelList, categorySelected);
     }
 }

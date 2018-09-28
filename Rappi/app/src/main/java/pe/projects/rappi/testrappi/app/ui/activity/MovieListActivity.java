@@ -8,7 +8,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -120,11 +119,6 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
     }
 
     @Override
-    public void showMessage() {
-
-    }
-
-    @Override
     public void goToMovieDetail(MovieModel movieModel) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.MOVIE_SELECTED, movieModel);
@@ -153,6 +147,16 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
         }
         presenter.saveMoviesOffline(listMovieModel.getResults(), categorySelected);
         moviesAdapter.setLoaded();
+    }
+
+    @Override
+    public void showMovieListOffline(List<MovieModel> movieModelList) {
+        validateDataMovies(movieModelList);
+        if(!movieModelList.isEmpty()){
+            rviMovies.setAdapter(null);
+            moviesAdapter = new MoviesAdapter(this, this, movieModelList, rviMovies);
+            rviMovies.setAdapter(moviesAdapter);
+        }
     }
 
     private void validateDataMovies(List<MovieModel> movieModelList){
@@ -235,17 +239,6 @@ public class MovieListActivity extends BaseCompatActivity implements MoviesListV
 
     private void loadListItemsOffline() {
         vLoadMoreMovies.setVisibility(View.GONE);
-        List<MovieModel> movieModelList = presenter.getMovieListOffline(categorySelected);
-        validateDataMovies(movieModelList);
-        if(!movieModelList.isEmpty()){
-            if(moviesAdapter != null){
-                this.movieModelList = movieModelList;
-                moviesAdapter.notifyDataSetChanged();
-            } else {
-                moviesAdapter = new MoviesAdapter(this, this, movieModelList, rviMovies);
-                rviMovies.setAdapter(moviesAdapter);
-            }
-        }
-
+        presenter.getMovieListOffline(categorySelected, this);
     }
 }
